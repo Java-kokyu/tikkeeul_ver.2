@@ -58,8 +58,8 @@ jobs:
         run: |
           docker login -u ${{ secrets.USERNAME }} -p ${{ secrets.PASSWORD }}
           docker build -t test .
-          docker tag test qwe382/tikkeeul:${GITHUB_SHA::7}
-          docker push qwe382/tikkeeul:${GITHUB_SHA::7}
+          docker tag test ${{ secrets.USERNAME }}/tikkeeul-ver:${GITHUB_SHA::7}
+          docker push ${{ secrets.USERNAME }}/tikkeeul-ver.2:${GITHUB_SHA::7}
 
       ## 4 이미지를 서버에서 run
       - name: Deploy
@@ -70,8 +70,8 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           envs: GITHUB_SHA
           script: |
-            docker pull qwe382/tikkeeul:${GITHUB_SHA::7}
-            docker tag qwe382/tikkeeul:${GITHUB_SHA::7} tikkeeul
+            docker pull ${{ secrets.USERNAME }}/tikkeeul-ver:${GITHUB_SHA::7}
+            docker tag ${{ secrets.USERNAME }}/tikkeeul-ver:${GITHUB_SHA::7} tikkeeul
             docker stop server
             sleep 5
             docker run -d --rm --name server -p 80:8080 tikkeeul
