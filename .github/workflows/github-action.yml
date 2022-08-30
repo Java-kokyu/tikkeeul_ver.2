@@ -72,6 +72,6 @@ jobs:
           script: |
             docker pull ${{ secrets.USERNAME }}/tikkeeul-ver.2:${GITHUB_SHA::7}
             docker tag ${{ secrets.USERNAME }}/tikkeeul-ver.2:${GITHUB_SHA::7} tikkeeul-ver.2
-            docker stop server
+            docker stop tikkeeul-ver.2
             sleep 5
             docker run -d --rm --name tikkeeul-ver.2 -p 80:8080 tikkeeul-ver2
