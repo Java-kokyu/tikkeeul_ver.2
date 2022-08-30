@@ -71,7 +71,7 @@ jobs:
           envs: GITHUB_SHA
           script: |
             docker pull ${{ secrets.USERNAME }}/tikkeeul-ver2:${GITHUB_SHA::7}
-            docker tag ${{ secrets.USERNAME }}/tikkeeul-ver2:${GITHUB_SHA::7} tikkeeul
+            docker tag ${{ secrets.USERNAME }}/tikkeeul-ver2:${GITHUB_SHA::7} tikkeeul-ver2
             docker stop server
             sleep 5
-            docker run -d --rm --name server -p 80:8080 tikkeeul
+            docker run -d --rm --name server -p 80:8080 tikkeeul-ver2
