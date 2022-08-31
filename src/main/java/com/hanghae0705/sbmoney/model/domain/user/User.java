@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.hanghae0705.sbmoney.model.domain.baseEntity.BaseEntity;
 import com.hanghae0705.sbmoney.model.domain.baseEntity.UserRoleEnum;
 import com.hanghae0705.sbmoney.model.domain.item.GoalItem;
+import com.hanghae0705.sbmoney.model.domain.item.SavedItem;
 import lombok.*;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
@@ -55,6 +56,10 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user")
     @JsonManagedReference(value = "user-fk")
     private List<GoalItem> goalItems;
+
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference(value = "user-fk")
+    private List<SavedItem> savedItems;
 
     public User(String username, String password, UserRoleEnum role) {
         this.username = username;

@@ -1,6 +1,7 @@
 package com.hanghae0705.sbmoney.controller.item;
 
 import com.hanghae0705.sbmoney.data.Message;
+import com.hanghae0705.sbmoney.data.ResponseMessage;
 import com.hanghae0705.sbmoney.exception.ItemException;
 import com.hanghae0705.sbmoney.model.domain.item.Item;
 import com.hanghae0705.sbmoney.model.domain.user.User;
@@ -20,10 +21,10 @@ public class ItemController {
     private final CommonService commonService;
 
     @PostMapping("/api/items/savedItem")
-    public ResponseEntity<Message> postNewSavedItem(@RequestBody Item.savedItemRequest itemRequest) throws ItemException {
+    public ResponseEntity<ResponseMessage> postNewSavedItem(@RequestBody Item.savedItemRequest itemRequest) throws ItemException {
         //바로 티끌에 추가
         User user = commonService.getUser();
-        Message message = itemService.postNewSavedItem(itemRequest, user);
+        ResponseMessage message = itemService.postNewSavedItem(itemRequest, user);
         return ResponseEntity.ok(message);
     }
 

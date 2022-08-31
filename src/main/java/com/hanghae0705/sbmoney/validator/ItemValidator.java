@@ -63,7 +63,7 @@ public class ItemValidator {
         }
     }
 
-    public void isValidNum(int num) throws ItemException {
+    public void isValidPrice(int num) throws ItemException {
         if(num < 0) {
             throw new ItemException(Constants.ExceptionClass.ITEM, HttpStatus.BAD_REQUEST, "잘못된 값이 입력되었습니다.");
         }

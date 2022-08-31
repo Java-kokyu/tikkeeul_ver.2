@@ -1,6 +1,7 @@
 package com.hanghae0705.sbmoney.service.item;
 
 import com.hanghae0705.sbmoney.data.Message;
+import com.hanghae0705.sbmoney.data.ResponseMessage;
 import com.hanghae0705.sbmoney.exception.Constants;
 import com.hanghae0705.sbmoney.exception.ItemException;
 import com.hanghae0705.sbmoney.model.domain.item.Category;
@@ -29,23 +30,23 @@ public class ItemService {
     private final SavedItemService savedItemService;
     private final GoalItemService goalItemService;
 
-    public Message postNewSavedItem(Item.savedItemRequest itemRequest, User user) throws ItemException {
+    public ResponseMessage postNewSavedItem(Item.savedItemRequest itemRequest, User user) throws ItemException {
         itemValidator.isExistItem(itemRequest.getItemName());
-        itemValidator.isValidNum(itemRequest.getDefaultPrice());
+        itemValidator.isValidPrice(itemRequest.getDefaultPrice());
         Category category = categoryRepository.findById(itemRequest.getCategoryId()).orElseThrow(
                 () -> new ItemException(Constants.ExceptionClass.CATEGORY, HttpStatus.BAD_REQUEST, "존재하지 않는 카테고리입니다.")
         );
         Item item = itemRepository.save(new Item(itemRequest, category));
 
         //아이템 등록 후 티끌 등록
-        SavedItem.Request savedItemRequest = new SavedItem.Request(item.getId(), itemRequest.getGoalItemId(), item.getDefaultPrice());
+        SavedItem.Request savedItemRequest = new SavedItem.Request(item.getId(), item.getDefaultPrice());
         return savedItemService.postSavedItem(savedItemRequest, user);
     }
 
     public Message postNewGoalItem(Item.goalItemRequest itemRequest, MultipartFile multipartFile, User user) throws ItemException, IOException {
         itemValidator.isExistItem(itemRequest.getItemName());
-        itemValidator.isValidNum(itemRequest.getDefaultPrice());
-        itemValidator.isValidNum(itemRequest.getGoalItemCount());
+        itemValidator.isValidPrice(itemRequest.getDefaultPrice());
+        itemValidator.isValidPrice(itemRequest.getGoalItemCount());
         Category category = categoryRepository.findById(itemRequest.getCategoryId()).orElseThrow(
                 () -> new ItemException(Constants.ExceptionClass.CATEGORY, HttpStatus.BAD_REQUEST, "존재하지 않는 카테고리입니다.")
         );
@@ -59,8 +60,8 @@ public class ItemService {
 
     public Message updateNewGoalItem(Long goalItemId, Item.goalItemRequest itemRequest, MultipartFile multipartFile, User user) throws ItemException, IOException {
         itemValidator.isExistItem(itemRequest.getItemName());
-        itemValidator.isValidNum(itemRequest.getDefaultPrice());
-        itemValidator.isValidNum(itemRequest.getGoalItemCount());
+        itemValidator.isValidPrice(itemRequest.getDefaultPrice());
+        itemValidator.isValidPrice(itemRequest.getGoalItemCount());
         Category category = categoryRepository.findById(itemRequest.getCategoryId()).orElseThrow(
                 () -> new ItemException(Constants.ExceptionClass.CATEGORY, HttpStatus.BAD_REQUEST, "존재하지 않는 카테고리입니다.")
         );

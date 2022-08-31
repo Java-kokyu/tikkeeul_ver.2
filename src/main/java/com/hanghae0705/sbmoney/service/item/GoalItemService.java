@@ -20,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
-import java.lang.management.GarbageCollectorMXBean;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -35,7 +34,7 @@ public class GoalItemService {
 
     public Message getAllItems(User user) throws ItemException {
         GoalItem.Response goalItem = (GoalItem.Response) getGoalItem(user).getData();
-        List<SavedItem.Response> savedItems = (List<SavedItem.Response>) savedItemService.getSavedItems(goalItem.getGoalItemId(), user).getData();
+        List<SavedItem.Response> savedItems = (List<SavedItem.Response>) savedItemService.getSavedItems(user).getData();
         GoalItem.AllResponse allResponse = new GoalItem.AllResponse(goalItem, savedItems);
         return new Message(true, "티끌 태산 조회에 성공하셨습니다.", allResponse);
     }
@@ -71,7 +70,7 @@ public class GoalItemService {
                 int totalPrice = 0;
                 for (SavedItem savedItem : savedItemList) {
                     Favorite.SavedItemResponse favorite = itemValidator.isFavoriteItem(favorites, savedItem.getItem(), savedItem.getPrice());
-                    SavedItem.Response savedItemResponse = new SavedItem.Response(savedItem, favorite);
+                    SavedItem.Response savedItemResponse = new SavedItem.Response(savedItem);
                     totalPrice += savedItem.getPrice();
                     savedItemResponseList.add(savedItemResponse);
                 }
@@ -120,8 +119,8 @@ public class GoalItemService {
         Item item = itemValidator.isValidCategoryAndItem(categoryId, itemId);
         int count = goalItemRequest.getGoalItemCount();
         int price = goalItemRequest.getPrice();
-        itemValidator.isValidNum(price);
-        itemValidator.isValidNum(count);
+        itemValidator.isValidPrice(price);
+        itemValidator.isValidPrice(count);
         int total = (price == 0) ? item.getDefaultPrice() * count : goalItemRequest.getPrice() * count;
         return goalItemRepository.save(new GoalItem(user, count, total, item));
     }
@@ -152,8 +151,8 @@ public class GoalItemService {
             Item item = itemValidator.isValidCategoryAndItem(categoryId, itemId);
             int count = goalItemRequest.getGoalItemCount();
             int price = goalItemRequest.getPrice();
-            itemValidator.isValidNum(price);
-            itemValidator.isValidNum(count);
+            itemValidator.isValidPrice(price);
+            itemValidator.isValidPrice(count);
             int total = (price == 0) ? item.getDefaultPrice() * count : goalItemRequest.getPrice() * count;
             int savedItemTotal = 0;
             double goalPercent = 1.0;
@@ -178,8 +177,8 @@ public class GoalItemService {
             int itemDefaultPrice = goalItem.getItem().getDefaultPrice();
             int count = goalItemRequest.getGoalItemCount();
             int price = goalItemRequest.getPrice();
-            itemValidator.isValidNum(price);
-            itemValidator.isValidNum(count);
+            itemValidator.isValidPrice(price);
+            itemValidator.isValidPrice(count);
             int total = (price == 0) ? itemDefaultPrice * count : goalItemRequest.getPrice() * count;
             int savedItemTotal = 0;
 
@@ -204,9 +203,9 @@ public class GoalItemService {
         List<SavedItem> savedItemList = goalItem.getSavedItems();
         //목표 없음 생성 후 히스토리에 저장
         GoalItem noGoalItem = createNoGoalItem(user);
-        for (SavedItem savedItem : savedItemList) {
-            savedItem.setGoalItem(noGoalItem);
-        }
+//        for (SavedItem savedItem : savedItemList) {
+//            savedItem.setGoalItem(noGoalItem);
+//        }
         goalItemRepository.deleteById(goalItemId);
         goalItemRepository.save(noGoalItem);
         LocalDateTime nowDate = LocalDateTime.now();

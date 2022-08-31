@@ -2,7 +2,7 @@ package com.hanghae0705.sbmoney.model.domain.chat.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.hanghae0705.sbmoney.model.domain.baseEntity.CreatedTime;
+import com.hanghae0705.sbmoney.model.domain.baseEntity.CreatedDate;
 import com.hanghae0705.sbmoney.model.domain.chat.ChatRoomProsCons;
 import com.hanghae0705.sbmoney.model.domain.user.User;
 import lombok.*;
@@ -14,7 +14,7 @@ import java.util.List;
 @Entity
 @Getter
 @RequiredArgsConstructor
-public class ChatRoom extends CreatedTime {
+public class ChatRoom extends CreatedDate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
