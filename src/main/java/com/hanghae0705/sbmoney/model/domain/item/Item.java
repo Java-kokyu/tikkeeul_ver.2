@@ -15,7 +15,7 @@ public class Item {
     //insert into item values (1, 3000, '소세지빵', 1);
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NotNull
@@ -52,37 +52,12 @@ public class Item {
     @Getter
     @NoArgsConstructor
     public static class Request {
-        private Long goalItemId;
         private Long categoryId;
         private String itemName;
         private int defaultPrice;
     }
 
-    @Getter
-    @NoArgsConstructor
-    public static class goalItemRequest {
-        private int goalItemCount;
-        private Long categoryId;
-        private String itemName;
-        private int defaultPrice;
-    }
-
-    @Getter
-    @NoArgsConstructor
-    public static class savedItemRequest {
-        private Long goalItemId;
-        private Long categoryId;
-        private String itemName;
-        private int defaultPrice;
-    }
-
-    public Item(savedItemRequest request, Category category) {
-        this.name = request.getItemName();
-        this.category = category;
-        this.defaultPrice = request.getDefaultPrice();
-    }
-
-    public Item(goalItemRequest request, Category category) {
+    public Item(Request request, Category category) {
         this.name = request.getItemName();
         this.category = category;
         this.defaultPrice = request.getDefaultPrice();
@@ -92,13 +67,6 @@ public class Item {
         this.name = favoriteRequest.getItemName();
         this.category = category;
         this.defaultPrice = favoriteRequest.getPrice();
-    }
-
-    @Getter
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class getRequest {
-        private Long goalItemId;
     }
 
 }

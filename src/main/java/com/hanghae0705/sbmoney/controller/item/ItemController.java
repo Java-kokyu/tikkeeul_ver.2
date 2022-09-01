@@ -1,6 +1,5 @@
 package com.hanghae0705.sbmoney.controller.item;
 
-import com.hanghae0705.sbmoney.data.Message;
 import com.hanghae0705.sbmoney.data.MessageWithData;
 import com.hanghae0705.sbmoney.data.MessageWithNoData;
 import com.hanghae0705.sbmoney.exception.ItemException;
@@ -18,8 +17,8 @@ public class ItemController {
     private final ItemService itemService;
     private final CommonService commonService;
 
-    @PostMapping("/api/items/savedItem")
-    public ResponseEntity<MessageWithNoData> postNewSavedItem(@RequestBody Item.savedItemRequest itemRequest) throws ItemException {
+    @PostMapping("/api/newSavedItem")
+    public ResponseEntity<MessageWithNoData> postNewSavedItem(@RequestBody Item.Request itemRequest) throws ItemException {
         //바로 티끌에 추가
         User user = commonService.getUser();
         MessageWithNoData message = itemService.postNewSavedItem(itemRequest, user);
@@ -48,8 +47,8 @@ public class ItemController {
 
 
     @GetMapping("/api/item")
-    public ResponseEntity<Message> getItems(){
-        Message message = itemService.getItems();
+    public ResponseEntity<MessageWithData> getItems(){
+        MessageWithData message = itemService.getItems();
         return ResponseEntity.ok(message);
     }
 }

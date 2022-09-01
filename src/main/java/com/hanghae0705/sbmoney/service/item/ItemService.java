@@ -28,7 +28,8 @@ public class ItemService {
     private final SavedItemService savedItemService;
 //    private final GoalItemService goalItemService;
 
-    public MessageWithNoData postNewSavedItem(Item.savedItemRequest itemRequest, User user) throws ItemException {
+    public MessageWithNoData postNewSavedItem(Item.Request itemRequest, User user) throws ItemException {
+        //아이템 등록
         itemValidator.isExistItem(itemRequest.getItemName());
         itemValidator.isValidPrice(itemRequest.getDefaultPrice());
         Category category = categoryRepository.findById(itemRequest.getCategoryId()).orElseThrow(
@@ -71,7 +72,7 @@ public class ItemService {
 //                : goalItemService.updateGoalItem(goalItemId, goalItemRequest, multipartFile, user);
 //    }
 
-    public Message getItems() {
+    public MessageWithData getItems() {
         List<Item> items = itemRepository.findAll();
         List<Item.Response> itemResponses = new ArrayList<>();
         for (Item item : items) {
@@ -80,6 +81,9 @@ public class ItemService {
                 itemResponses.add(itemResponse);
             }
         }
-        return new Message(true, "아이템 전체 조회를 성공했습니다.", itemResponses);
+        return MessageWithData.builder()
+                .msg("아이템 전체 조회를 성공했습니다.")
+                .data(itemResponses)
+                .build();
     }
 }
