@@ -1,7 +1,8 @@
 package com.hanghae0705.sbmoney.controller.item;
 
 import com.hanghae0705.sbmoney.data.Message;
-import com.hanghae0705.sbmoney.data.ResponseMessage;
+import com.hanghae0705.sbmoney.data.MessageWithData;
+import com.hanghae0705.sbmoney.data.MessageWithNoData;
 import com.hanghae0705.sbmoney.exception.ItemException;
 import com.hanghae0705.sbmoney.model.domain.item.Item;
 import com.hanghae0705.sbmoney.model.domain.user.User;
@@ -10,9 +11,6 @@ import com.hanghae0705.sbmoney.service.item.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,10 +19,10 @@ public class ItemController {
     private final CommonService commonService;
 
     @PostMapping("/api/items/savedItem")
-    public ResponseEntity<ResponseMessage> postNewSavedItem(@RequestBody Item.savedItemRequest itemRequest) throws ItemException {
+    public ResponseEntity<MessageWithNoData> postNewSavedItem(@RequestBody Item.savedItemRequest itemRequest) throws ItemException {
         //바로 티끌에 추가
         User user = commonService.getUser();
-        ResponseMessage message = itemService.postNewSavedItem(itemRequest, user);
+        MessageWithNoData message = itemService.postNewSavedItem(itemRequest, user);
         return ResponseEntity.ok(message);
     }
 

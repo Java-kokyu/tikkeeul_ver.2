@@ -1,11 +1,11 @@
 package com.hanghae0705.sbmoney.service.item;
 
 import com.hanghae0705.sbmoney.data.Message;
-import com.hanghae0705.sbmoney.data.ResponseMessage;
+import com.hanghae0705.sbmoney.data.MessageWithData;
+import com.hanghae0705.sbmoney.data.MessageWithNoData;
 import com.hanghae0705.sbmoney.exception.Constants;
 import com.hanghae0705.sbmoney.exception.ItemException;
 import com.hanghae0705.sbmoney.model.domain.item.Category;
-import com.hanghae0705.sbmoney.model.domain.item.GoalItem;
 import com.hanghae0705.sbmoney.model.domain.item.Item;
 import com.hanghae0705.sbmoney.model.domain.item.SavedItem;
 import com.hanghae0705.sbmoney.model.domain.user.User;
@@ -15,9 +15,7 @@ import com.hanghae0705.sbmoney.validator.ItemValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +28,7 @@ public class ItemService {
     private final SavedItemService savedItemService;
 //    private final GoalItemService goalItemService;
 
-    public ResponseMessage postNewSavedItem(Item.savedItemRequest itemRequest, User user) throws ItemException {
+    public MessageWithNoData postNewSavedItem(Item.savedItemRequest itemRequest, User user) throws ItemException {
         itemValidator.isExistItem(itemRequest.getItemName());
         itemValidator.isValidPrice(itemRequest.getDefaultPrice());
         Category category = categoryRepository.findById(itemRequest.getCategoryId()).orElseThrow(

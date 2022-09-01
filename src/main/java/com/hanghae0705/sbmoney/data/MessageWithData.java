@@ -6,18 +6,13 @@ import lombok.Getter;
 
 @Data
 @Getter
-public class ResponseMessage {
+public class MessageWithData {
     private String msg;
     private Object data;
 
     @Builder
-    public ResponseMessage(String msg, Object data) {
+    public MessageWithData(String msg, Object data) {
         this.msg = msg;
         this.data = data;
-    }
-
-    @Builder
-    public ResponseMessage(String msg) {
-        this.msg = msg;
     }
 }

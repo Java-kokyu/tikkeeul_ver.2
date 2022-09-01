@@ -8,6 +8,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -60,20 +61,32 @@ public class SavedItem extends CreatedDate {
     @Getter
     @AllArgsConstructor
     public static class Response {
+        private Long savedItemId;
         private LocalDateTime createdDate;
         private Long categoryId;
         private String categoryName;
-        private Long itemId;
         private String itemName;
-        private int itemDefaultPrice;
+        private int price;
 
         public Response(SavedItem savedItem) {
+            this.savedItemId = savedItem.getId();
             this.createdDate = savedItem.getCreatedDate();
             this.categoryId = savedItem.getItem().getCategory().getId();
             this.categoryName = savedItem.getItem().getCategory().getName();
-            this.itemId = savedItem.getItem().getId();
             this.itemName = savedItem.getItem().getName();
-            this.itemDefaultPrice = savedItem.getPrice();
+            this.price = savedItem.getPrice();
+        }
+    }
+
+    @Getter
+    @RequiredArgsConstructor
+    public static class IntegrateResponse {
+        private int total;
+        private List<Response> responseList;
+
+        public IntegrateResponse(int total, List<Response> responseList) {
+            this.total = total;
+            this.responseList = responseList;
         }
     }
 

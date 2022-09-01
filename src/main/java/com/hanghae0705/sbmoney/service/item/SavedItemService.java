@@ -1,6 +1,7 @@
 package com.hanghae0705.sbmoney.service.item;
 
-import com.hanghae0705.sbmoney.data.ResponseMessage;
+import com.hanghae0705.sbmoney.data.MessageWithData;
+import com.hanghae0705.sbmoney.data.MessageWithNoData;
 import com.hanghae0705.sbmoney.exception.ItemException;
 import com.hanghae0705.sbmoney.model.domain.item.Item;
 import com.hanghae0705.sbmoney.model.domain.item.SavedItem;
@@ -31,50 +32,50 @@ public class SavedItemService {
     }
 
     @Transactional
-    public ResponseMessage postSavedItem(SavedItem.Request savedItemRequest, User user) throws ItemException {
+    public MessageWithNoData postSavedItem(SavedItem.Request savedItemRequest, User user) throws ItemException {
         Item item = itemValidator.isValidItem(savedItemRequest.getItemId());
         int price = (savedItemRequest.getPrice() == 0) ? item.getDefaultPrice() : savedItemRequest.getPrice();
         itemValidator.isValidPrice(savedItemRequest.getPrice());
 
         savedItemRepository.save(new SavedItem(item, price, user));
 
-        return ResponseMessage.builder()
+        return MessageWithNoData.builder()
                 .msg("티끌 등록에 성공하였습니다.")
                 .build();
     }
 
-    public ResponseMessage getSavedItems(User user) {
+    public MessageWithData getSavedItems(User user) {
         List<SavedItem> savedItemList = user.getSavedItems();
+        int totalPrice = getTotalPrice(user);
         List<SavedItem.Response> savedItemResponseList = new ArrayList<>();
         for (SavedItem savedItem : savedItemList) {
             SavedItem.Response savedItemResponse = new SavedItem.Response(savedItem);
             savedItemResponseList.add(savedItemResponse);
         }
         Collections.reverse(savedItemResponseList); //id 내림차순 정렬
-        return ResponseMessage.builder()
+        SavedItem.IntegrateResponse response = new SavedItem.IntegrateResponse(totalPrice, savedItemResponseList);
+        return MessageWithData.builder()
                 .msg("티끌 조회에 성공하였습니다.")
-                .data(savedItemResponseList)
+                .data(response)
                 .build();
     }
 
     @Transactional
-    public ResponseMessage updateSavedItem(Long savedItemId, SavedItem.Update price, User user) throws ItemException {
+    public MessageWithNoData updateSavedItem(Long savedItemId, SavedItem.Update price, User user) throws ItemException {
         SavedItem savedItem = itemValidator.isValidSavedItem(savedItemId, user);
         itemValidator.isValidPrice(price.getPrice());
-        int updatePrice = getTotalPrice(user) + price.getPrice();
+        savedItem.update(price.getPrice());
 
-        savedItem.update(updatePrice);
-
-        return ResponseMessage.builder()
+        return MessageWithNoData.builder()
                 .msg(savedItem.getId() + ", " + savedItem.getItem().getName() + " 티끌 수정에 성공했습니다.")
                 .build();
     }
 
     @Transactional
-    public ResponseMessage deleteSavedItem(Long savedItemId, User user) throws ItemException {
+    public MessageWithNoData deleteSavedItem(Long savedItemId, User user) throws ItemException {
         SavedItem savedItem = itemValidator.isValidSavedItem(savedItemId, user);
         savedItemRepository.deleteById(savedItemId);
-        return ResponseMessage.builder()
+        return MessageWithNoData.builder()
                 .msg(savedItem.getId() + ", " + savedItem.getItem().getName() + " 티끌 삭제에 성공했습니다.")
                 .build();
     }

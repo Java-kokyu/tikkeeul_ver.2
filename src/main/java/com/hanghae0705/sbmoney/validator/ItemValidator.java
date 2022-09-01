@@ -77,19 +77,19 @@ public class ItemValidator {
 
     public Item isValidCategoryAndItem(Long categoryId, Long itemId) throws ItemException {
         if(itemId == null){
-            throw new ItemException(Constants.ExceptionClass.GOAL_ITEM, HttpStatus.BAD_REQUEST,"존재하지 않는 물건입니다.");
+            throw new ItemException(Constants.ExceptionClass.ITEM, HttpStatus.BAD_REQUEST,"존재하지 않는 물건입니다.");
         }
         return itemRepository.findByCategoryIdAndId(categoryId, itemId).orElseThrow(
-                () -> new ItemException(Constants.ExceptionClass.GOAL_ITEM, HttpStatus.BAD_REQUEST,"존재하지 않는 물건입니다.")
+                () -> new ItemException(Constants.ExceptionClass.ITEM, HttpStatus.BAD_REQUEST,"존재하지 않는 물건입니다.")
         );
     }
 
     public Item isValidItem(Long itemId) throws ItemException {
         if(itemId == null){
-            throw new ItemException(Constants.ExceptionClass.GOAL_ITEM, HttpStatus.BAD_REQUEST,"존재하지 않는 물건입니다.");
+            throw new ItemException(Constants.ExceptionClass.ITEM, HttpStatus.BAD_REQUEST,"존재하지 않는 물건입니다.");
         }
         return itemRepository.findById(itemId).orElseThrow(
-                () -> new ItemException(Constants.ExceptionClass.GOAL_ITEM, HttpStatus.BAD_REQUEST,"존재하지 않는 물건입니다.")
+                () -> new ItemException(Constants.ExceptionClass.ITEM, HttpStatus.BAD_REQUEST,"존재하지 않는 물건입니다.")
         );
     }
 }
