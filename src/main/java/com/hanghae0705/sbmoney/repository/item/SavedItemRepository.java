@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface SavedItemRepository extends JpaRepository<SavedItem, Long> {
-    List<SavedItem> findAllByGoalItemAndAndCreatedAtIsBefore(GoalItem goalItem, LocalDateTime createdDate);
 
     @Modifying
     @Query("delete from SavedItem s where s.user.id = ?1")

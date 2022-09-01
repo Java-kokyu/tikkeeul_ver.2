@@ -28,7 +28,7 @@ public class ItemService {
     private final ItemRepository itemRepository;
     private final CategoryRepository categoryRepository;
     private final SavedItemService savedItemService;
-    private final GoalItemService goalItemService;
+//    private final GoalItemService goalItemService;
 
     public ResponseMessage postNewSavedItem(Item.savedItemRequest itemRequest, User user) throws ItemException {
         itemValidator.isExistItem(itemRequest.getItemName());
@@ -43,35 +43,35 @@ public class ItemService {
         return savedItemService.postSavedItem(savedItemRequest, user);
     }
 
-    public Message postNewGoalItem(Item.goalItemRequest itemRequest, MultipartFile multipartFile, User user) throws ItemException, IOException {
-        itemValidator.isExistItem(itemRequest.getItemName());
-        itemValidator.isValidPrice(itemRequest.getDefaultPrice());
-        itemValidator.isValidPrice(itemRequest.getGoalItemCount());
-        Category category = categoryRepository.findById(itemRequest.getCategoryId()).orElseThrow(
-                () -> new ItemException(Constants.ExceptionClass.CATEGORY, HttpStatus.BAD_REQUEST, "존재하지 않는 카테고리입니다.")
-        );
-        Item item = itemRepository.save(new Item(itemRequest, category));
+//    public Message postNewGoalItem(Item.goalItemRequest itemRequest, MultipartFile multipartFile, User user) throws ItemException, IOException {
+//        itemValidator.isExistItem(itemRequest.getItemName());
+//        itemValidator.isValidPrice(itemRequest.getDefaultPrice());
+//        itemValidator.isValidPrice(itemRequest.getGoalItemCount());
+//        Category category = categoryRepository.findById(itemRequest.getCategoryId()).orElseThrow(
+//                () -> new ItemException(Constants.ExceptionClass.CATEGORY, HttpStatus.BAD_REQUEST, "존재하지 않는 카테고리입니다.")
+//        );
+//        Item item = itemRepository.save(new Item(itemRequest, category));
+//
+//        //아이템 등록 후 태산 등록
+//        GoalItem.Request goalItemRequest = new GoalItem.Request(category.getId(), item.getId(), itemRequest.getGoalItemCount(), item.getDefaultPrice());
+//        return (multipartFile == null) ? goalItemService.postGoalItem(goalItemRequest, user)
+//                : goalItemService.postGoalItem(goalItemRequest, multipartFile, user);
+//    }
 
-        //아이템 등록 후 태산 등록
-        GoalItem.Request goalItemRequest = new GoalItem.Request(category.getId(), item.getId(), itemRequest.getGoalItemCount(), item.getDefaultPrice());
-        return (multipartFile == null) ? goalItemService.postGoalItem(goalItemRequest, user)
-                : goalItemService.postGoalItem(goalItemRequest, multipartFile, user);
-    }
-
-    public Message updateNewGoalItem(Long goalItemId, Item.goalItemRequest itemRequest, MultipartFile multipartFile, User user) throws ItemException, IOException {
-        itemValidator.isExistItem(itemRequest.getItemName());
-        itemValidator.isValidPrice(itemRequest.getDefaultPrice());
-        itemValidator.isValidPrice(itemRequest.getGoalItemCount());
-        Category category = categoryRepository.findById(itemRequest.getCategoryId()).orElseThrow(
-                () -> new ItemException(Constants.ExceptionClass.CATEGORY, HttpStatus.BAD_REQUEST, "존재하지 않는 카테고리입니다.")
-        );
-        Item item = itemRepository.save(new Item(itemRequest, category));
-
-        //아이템 등록 후 태산 등록
-        GoalItem.Request goalItemRequest = new GoalItem.Request(category.getId(), item.getId(), itemRequest.getGoalItemCount(), item.getDefaultPrice());
-        return (multipartFile == null) ? goalItemService.updateGoalItem(goalItemId, goalItemRequest, user)
-                : goalItemService.updateGoalItem(goalItemId, goalItemRequest, multipartFile, user);
-    }
+//    public Message updateNewGoalItem(Long goalItemId, Item.goalItemRequest itemRequest, MultipartFile multipartFile, User user) throws ItemException, IOException {
+//        itemValidator.isExistItem(itemRequest.getItemName());
+//        itemValidator.isValidPrice(itemRequest.getDefaultPrice());
+//        itemValidator.isValidPrice(itemRequest.getGoalItemCount());
+//        Category category = categoryRepository.findById(itemRequest.getCategoryId()).orElseThrow(
+//                () -> new ItemException(Constants.ExceptionClass.CATEGORY, HttpStatus.BAD_REQUEST, "존재하지 않는 카테고리입니다.")
+//        );
+//        Item item = itemRepository.save(new Item(itemRequest, category));
+//
+//        //아이템 등록 후 태산 등록
+//        GoalItem.Request goalItemRequest = new GoalItem.Request(category.getId(), item.getId(), itemRequest.getGoalItemCount(), item.getDefaultPrice());
+//        return (multipartFile == null) ? goalItemService.updateGoalItem(goalItemId, goalItemRequest, user)
+//                : goalItemService.updateGoalItem(goalItemId, goalItemRequest, multipartFile, user);
+//    }
 
     public Message getItems() {
         List<Item> items = itemRepository.findAll();

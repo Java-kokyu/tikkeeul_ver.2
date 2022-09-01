@@ -44,10 +44,6 @@ public class GoalItem extends BaseEntity {
     @JsonBackReference(value = "item-fk")
     private Item item;
 
-    @OneToMany(mappedBy = "goalItem")
-    @JsonManagedReference(value = "goalItem-fk")
-    private List<SavedItem> savedItems;
-
     @Column
     private boolean checkReached;
 
@@ -148,7 +144,6 @@ public class GoalItem extends BaseEntity {
             this.totalPrice = goalItem.getTotal();
             this.checkReached = goalItem.isCheckReached();
             this.goalPercent = goalItem.getGoalPercent();
-            this.savedItemCount = (goalItem.getSavedItems() == null) ? 0 : goalItem.getSavedItems().size();
             this.createdAt = goalItem.getCreatedDate();
             this.reachedAt = goalItem.getReachedAt();
             this.image = goalItem.getImage();
@@ -203,7 +198,6 @@ public class GoalItem extends BaseEntity {
             this.totalPrice = goalItem.getTotal();
             this.checkReached = goalItem.isCheckReached();
             this.goalPercent = goalItem.getGoalPercent();
-            this.savedItemCount = (goalItem.getSavedItems() == null) ? 0 : goalItem.getSavedItems().size();
             this.createdAt = goalItem.getCreatedDate();
             this.reachedAt = goalItem.getReachedAt();
             this.image = goalItem.getImage();
@@ -240,7 +234,6 @@ public class GoalItem extends BaseEntity {
             this.totalPrice = totalPrice;
             this.checkReached = goalItem.isCheckReached();
             this.goalPercent = goalItem.getGoalPercent();
-            this.savedItemCount = (goalItem.getSavedItems() == null) ? 0 : goalItem.getSavedItems().size();
             this.createdAt = goalItem.getCreatedDate();
             this.reachedAt = goalItem.getReachedAt();
             this.savedItems = savedItems;

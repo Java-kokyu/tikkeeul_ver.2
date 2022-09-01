@@ -28,24 +28,24 @@ public class ItemController {
         return ResponseEntity.ok(message);
     }
 
-    @PostMapping("/api/items/goalItem")
-    public ResponseEntity<Message> postNewGoalItem(@RequestPart(value = "image",required = false) MultipartFile multipartFile,
-                                                   @RequestPart(value = "goalItem") Item.goalItemRequest itemRequest) throws ItemException, IOException {
-        //바로 티끌에 추가
-        User user = commonService.getUser();
-        Message message = itemService.postNewGoalItem(itemRequest, multipartFile, user);
-        return ResponseEntity.ok(message);
-    }
-
-    @PutMapping("/api/items/goalItem/{goalItemId}")
-    public ResponseEntity<Message> postNewGoalItem(@PathVariable Long goalItemId,
-                                                   @RequestPart(value = "image",required = false) MultipartFile multipartFile,
-                                                   @RequestPart(value = "goalItem") Item.goalItemRequest itemRequest) throws ItemException, IOException {
-        //바로 티끌에 추가
-        User user = commonService.getUser();
-        Message message = itemService.updateNewGoalItem(goalItemId, itemRequest, multipartFile, user);
-        return ResponseEntity.ok(message);
-    }
+//    @PostMapping("/api/items/goalItem")
+//    public ResponseEntity<Message> postNewGoalItem(@RequestPart(value = "image",required = false) MultipartFile multipartFile,
+//                                                   @RequestPart(value = "goalItem") Item.goalItemRequest itemRequest) throws ItemException, IOException {
+//        //바로 티끌에 추가
+//        User user = commonService.getUser();
+//        Message message = itemService.postNewGoalItem(itemRequest, multipartFile, user);
+//        return ResponseEntity.ok(message);
+//    }
+//
+//    @PutMapping("/api/items/goalItem/{goalItemId}")
+//    public ResponseEntity<Message> postNewGoalItem(@PathVariable Long goalItemId,
+//                                                   @RequestPart(value = "image",required = false) MultipartFile multipartFile,
+//                                                   @RequestPart(value = "goalItem") Item.goalItemRequest itemRequest) throws ItemException, IOException {
+//        //바로 티끌에 추가
+//        User user = commonService.getUser();
+//        Message message = itemService.updateNewGoalItem(goalItemId, itemRequest, multipartFile, user);
+//        return ResponseEntity.ok(message);
+//    }
 
 
 

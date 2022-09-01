@@ -210,7 +210,6 @@ public class Board extends BaseEntity {
         private Long saveItemId;
         private String saveItemName;
         private LocalDateTime createdDate;
-        private LocalDateTime modifiedDate;
         private int price;
         private Long categoryId;
         private String categoryName;
@@ -222,7 +221,6 @@ public class Board extends BaseEntity {
             this.categoryId = savedItem.getItem().getCategory().getId();
             this.categoryName = savedItem.getItem().getCategory().getName();
             this.createdDate = savedItem.getCreatedDate();
-            this.modifiedDate = savedItem.getModifiedDate();
         }
     }
 }
