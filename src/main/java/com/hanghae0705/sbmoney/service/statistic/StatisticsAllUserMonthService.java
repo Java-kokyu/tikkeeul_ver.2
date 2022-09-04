@@ -31,6 +31,12 @@ public class StatisticsAllUserMonthService {
         LocalDateTime startDateTime = monthFirst.atTime(LocalTime.MIDNIGHT); // 2022-*-01T00:00
         LocalDateTime endDateTime = yesterday.atTime(LocalTime.MAX); // 2022-*-31T23:59:59.999999999
 
+        // 오늘 날짜로 테스트
+//        LocalDate yesterday = LocalDate.now(); // 2022-07-12
+//        LocalDateTime startDateTime = yesterday.atTime(LocalTime.MIDNIGHT); // 2022-07-12T00:00
+//        LocalDate monthFirst = LocalDate.of(yesterday.getYear(), yesterday.getMonth(), 1);
+//        LocalDateTime endDateTime = yesterday.atTime(LocalTime.MAX); // 2022-07-12T23:59:59.999999999
+
         // userId로 savedItem 일별 리스트를 높은 가격순으로 구해오기
         List<SavedItemForStatisticsAllUserDto> savedItemList = statisticsAllUserRepository.findByMonth(startDateTime, endDateTime);
 

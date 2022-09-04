@@ -38,6 +38,11 @@ public class StatisticsMyDayService {
         LocalDateTime startDateTime = yesterday.atTime(LocalTime.MIDNIGHT); // 2022-07-12T00:00
         LocalDateTime endDateTime = yesterday.atTime(LocalTime.MAX); // 2022-07-12T23:59:59.999999999
 
+        // 오늘 날짜로 테스트
+//        LocalDate yesterday = LocalDate.now(); // 2022-07-12
+//        LocalDateTime startDateTime = yesterday.atTime(LocalTime.MIDNIGHT); // 2022-07-12T00:00
+//        LocalDateTime endDateTime = yesterday.atTime(LocalTime.MAX); // 2022-07-12T23:59:59.999999999
+
         // savedItem 일별 리스트를 구해오기
         List<SavedItemForStatisticsDto> savedItemList = statisticsMyDayRepository.findByDate(startDateTime, endDateTime);
 

@@ -39,6 +39,10 @@ public class StatisticsMyMonthlyService {
             // 220701 0100 스케쥴러 작동 시 220601 01:00 ~ 220701 00:59:59 까지 집계한다.
             // expect collectStartTime = 220601T0100
             LocalDateTime collectStartTime = LocalDate.now(zoneId).minusMonths(1).atTime(1, 0);
+
+            //테스트용
+//            LocalDateTime collectStartTime = LocalDate.now(zoneId).atTime(1, 0);
+
             // 220601 01:00 ~ 220701 00:59:59
             LocalDateTime collectEndTime = collectStartTime.plusMonths(1).minusSeconds(1);
 

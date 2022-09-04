@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+
 @Entity
 @Getter
 @RequiredArgsConstructor
@@ -38,7 +39,7 @@ public class StatisticsAllUserDay {
     private int rankCount;
 
     @Builder
-    public StatisticsAllUserDay( Long categoryId, String standardDate, String itemName, int totalPrice, Long totalCount, int rankPrice, int rankCount) {
+    public StatisticsAllUserDay(Long categoryId, String standardDate, String itemName, int totalPrice, Long totalCount, int rankPrice, int rankCount) {
         this.standardDate = standardDate;
         this.itemName = itemName;
         this.categoryId = categoryId;
@@ -48,7 +49,7 @@ public class StatisticsAllUserDay {
         this.rankCount = rankCount;
     }
 
-    public void changeRankCount(int rank){
+    public void changeRankCount(int rank) {
         this.rankCount = rank;
     }
 
@@ -60,11 +61,10 @@ public class StatisticsAllUserDay {
         private final int rank;
 
         @Builder
-        public AllUserDailyByPrice( String itemName, Long categoryId, int rankPrice) {
-
+        public AllUserDailyByPrice(String itemName, Long categoryId, int rank) {
             this.itemName = itemName;
             this.categoryId = categoryId;
-            this.rank = rankPrice;
+            this.rank = rank;
         }
     }
 
@@ -76,7 +76,7 @@ public class StatisticsAllUserDay {
         private final int rank;
 
         @Builder
-        public AllUserDailyByCount( String itemName, Long categoryId, int rankCount) {
+        public AllUserDailyByCount(String itemName, Long categoryId, int rankCount) {
             this.itemName = itemName;
             this.categoryId = categoryId;
             this.rank = rankCount;
